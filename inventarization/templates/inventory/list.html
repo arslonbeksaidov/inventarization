@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Inventory{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary">📋 Inventory</h2>
+    <a href="{% url 'inventory_create' %}" class="btn btn-success">+ Add Inventory</a>
+</div>
+
+{% if items %}
+    <div class="card shadow rounded-4">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product</th>
+                        <th>Room</th>
+                        <th>Quantity</th>
+                        <th style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.product }}</td>
+                            <td>{{ item.room }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>
+                                <a href="{% url 'inventory_update' item.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a href="{% url 'inventory_delete' item.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-info">No inventory records found.</div>
+{% endif %}
+{% endblock %}
